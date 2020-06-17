@@ -8,3 +8,7 @@ eureka:
     service-url:
       defaultZone: http://localhost:10086/eureka
     registry-fetch-interval-seconds: 5
+# 自定义负载均衡策略
+service-provider:
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule

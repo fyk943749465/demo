@@ -15,17 +15,25 @@ public class UserController {
 
     @Autowired
     private RestTemplate restTemplate;
+// 以前的调用方式
+//    @Autowired
+//    private DiscoveryClient discoveryClient;  //包含了拉取的所有服务信息
+//
+//    @GetMapping
+//    @ResponseBody
+//    public User queryUserById(@RequestParam("id")Long id) {
+//
+//       List<ServiceInstance> instanceList = discoveryClient.getInstances("service-provider");
+//       ServiceInstance instance = instanceList.get(0);
+//       // 硬编码问题
+//       return this.restTemplate.getForObject("http://" + instance.getHost()+":"+instance.getPort()+"/user/" + id, User.class);
+//    }
 
-    @Autowired
-    private DiscoveryClient discoveryClient;  //包含了拉取的所有服务信息
-
+    // 开启负载均衡后的调用方式
     @GetMapping
     @ResponseBody
     public User queryUserById(@RequestParam("id")Long id) {
+        return this.restTemplate.getForObject("http://service-provider/user/" + id, User.class);
 
-       List<ServiceInstance> instanceList = discoveryClient.getInstances("service-provider");
-       ServiceInstance instance = instanceList.get(0);
-       // 硬编码问题
-       return this.restTemplate.getForObject("http://" + instance.getHost()+":"+instance.getPort()+"/user/" + id, User.class);
     }
 }
