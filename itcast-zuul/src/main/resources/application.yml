@@ -1,0 +1,29 @@
+server:
+  port: 10010
+spring:
+  application:
+    name: itcast-zuul
+#zuul直接去找服务的配置
+# 第一种配置方式
+#zuul:
+#  routes:
+#    service-provider: #路由名称,可以随便写,习惯上服务名称
+#      path: /service-provider/**
+#      url: http://localhost:8082
+# 第二种配置方式
+#zuul:
+#  routes:
+#    service-provider:
+#      path: /service-provider/**
+#      url: http://localhost:8082
+# 第三种配置方式 推荐使用第三种配置方式
+zuul:
+  routes:
+    service-provider: /service-provider/**
+  prefix: /api
+# 第四种配置方式, 什么也不配
+#zuul注册到eurake容器
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:10086/eureka
